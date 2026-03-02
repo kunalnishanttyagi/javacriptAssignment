@@ -31,17 +31,17 @@ function evaluateExpression(expression) {
 
 
     // traverse full expression
-    for (let i = 0; i < expression.length; i++) {
-        let char = expression[i];
-
-        if (char === ' ') continue;
+    for (let i=0;i<expression.length;i++) {
+        
+        let char= expression[i];
+        if (char===' ') continue;
 
         // if numebr
-        if (char >= '0' && char <= '9') {
-            let numStr = "";
+        if (char>='0' && char<='9') {
+            let numStr="";
             // form full numebr
-            while (i < expression.length && (expression[i]>='0' && expression[i]<='9')) {
-                numStr += expression[i];
+            while (i<expression.length && (expression[i]>='0' && expression[i]<='9')) {
+                numStr+=expression[i];
                 i++;
             }
             // make string numebr to int
@@ -49,16 +49,16 @@ function evaluateExpression(expression) {
             i--; 
         } 
         // if opening bracket push it direct
-        else if (char === '(') {
+        else if (char==='(') {
             operators.push(char);
         } 
         // if closing evaluate this bracket
-        else if (char === ')') {
-            while (operators.length > 0 && operators[operators.length - 1] !== '(') {
-                let val2 = values.pop();
-                let val1 = values.pop();
-                let op = operators.pop();
-                values.push(calculate(op, val1, val2));
+        else if (char===')') {
+            while (operators.length>0 && operators[operators.length-1] !=='(') {
+                let val2 =values.pop();
+                let val1 =values.pop();
+                let op =operators.pop();
+                values.push(calculate(op, val1,val2));
             }
             // remove opening bracket
             operators.pop(); 
@@ -66,24 +66,24 @@ function evaluateExpression(expression) {
         else {
             // if previous opertor is big then calculate it first
             while (
-                operators.length > 0 && 
-                precedence.get(operators[operators.length - 1]) >= precedence.get(char)
+                operators.length>0 && 
+                precedence.get(operators[operators.length-1])>=precedence.get(char)
             ) {
-                let val2 = values.pop();
-                let val1 = values.pop();
-                let op = operators.pop();
-                values.push(calculate(op, val1, val2));
+                let val2 =values.pop();
+                let val1 =values.pop();
+                let op =operators.pop();
+                values.push(calculate(op,val1,val2));
             }
             operators.push(char);
         }
     }
 
     // last remainging calculate all 
-    while (operators.length > 0) {
-        let val2 = values.pop();
+    while (operators.length>0) {
+        let val2 =values.pop();
         let val1 = values.pop();
         let op = operators.pop();
-        values.push(calculate(op, val1, val2));
+        values.push(calculate(op,val1, val2));
     }
 
     return values;
@@ -91,3 +91,4 @@ function evaluateExpression(expression) {
 
 var expression = "1 + (2 + 3) * 4 - 10 / 2";
 console.log(evaluateExpression(expression)); 
+
